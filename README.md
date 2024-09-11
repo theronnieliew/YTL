@@ -37,6 +37,6 @@ yarn run-ios --device
 
 You can replace the selected simulator with any iPhone of your choice provided you have it installed. Eg: iPhone 11, iPhone 13 Pro.
 
-This App should ideally be running on a physical device to showcase that Biometrics work
+This App should ideally be running on a physical device to showcase **biometrics** functionality
 
 
