@@ -1,5 +1,5 @@
 
-# Lendala Test
+# YTL Assessment
 
 ## Step 1: Install Dependencies
 
