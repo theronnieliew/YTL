@@ -14,6 +14,7 @@ import {
 import ReactNativeBiometrics from 'react-native-biometrics';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
+import {Transaction} from '../types/interfaces';
 import {TransactionItem} from '../components';
 import {Color, scale, verticalScale} from '../utils';
 import {RootStackParamList} from '../navigator';
@@ -26,16 +27,6 @@ type TransactionHistoryScreenProp = NativeStackNavigationProp<
 
 interface Props {
   navigation: TransactionHistoryScreenProp;
-}
-
-interface Transaction {
-  id: number;
-  amount: number;
-  date: string;
-  description: string;
-  type: string;
-  transactionID: string;
-  status: string;
 }
 
 export const TransactionHistoryScreen = ({navigation}: Props) => {
@@ -142,7 +133,9 @@ export const TransactionHistoryScreen = ({navigation}: Props) => {
                   type={item.type}
                   amount={item.amount}
                   onPress={() =>
-                    navigation.navigate('Details', {transaction: item})
+                    navigation.navigate('Details', {transaction: item} as {
+                      transaction: Transaction;
+                    })
                   }
                 />
               )}

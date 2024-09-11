@@ -1,23 +1,20 @@
 import React from 'react';
 import {Text, StyleSheet, SafeAreaView, View} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import moment from 'moment';
 
+import {RootStackParamList} from '../navigator';
 import {Color, scale, verticalScale} from '../utils';
 
-interface TransactionDetailScreenProps {
-  id: number;
-  amount: number;
-  date: string;
-  description: string;
-  type: string;
-  transactionID: string;
-  status: string;
-}
+type TransactionDetailScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Details'
+>;
 
-export const TransactionDetailScreen = (
-  props: TransactionDetailScreenProps,
-) => {
-  const {transaction} = props.route.params;
+export const TransactionDetailScreen = ({
+  route,
+}: TransactionDetailScreenProps) => {
+  const {transaction} = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
