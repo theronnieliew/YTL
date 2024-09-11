@@ -2,7 +2,6 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {TransactionHistoryScreen, TransactionDetailScreen} from '../screens';
-import {Color} from '../utils/color';
 
 export type RootStackParamList = {
   History: undefined;
@@ -25,7 +24,6 @@ export const Navigator = () => {
         options={{
           headerTitle: 'Details',
           headerBackTitleVisible: false,
-          headerTintColor: Color.SELECTED,
         }}
       />
     </Stack.Navigator>
