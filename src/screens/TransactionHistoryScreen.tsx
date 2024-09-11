@@ -8,6 +8,8 @@ import {
   Button,
   FlatList,
   ActivityIndicator,
+  RefreshControl,
+  AppState,
 } from 'react-native';
 import ReactNativeBiometrics from 'react-native-biometrics';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -38,55 +40,76 @@ interface Transaction {
 
 export const TransactionHistoryScreen = ({navigation}: Props) => {
   const [authenticated, setAuthenticated] = useState(false);
-
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
-    handleBiometricAuthentication();
-  }, []);
+    fetchData();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await mockApi.fetchTransactionData();
-        setTransactions(data);
-      } catch (error: any) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+    const handleAppStateChange = (nextAppState: string) => {
+      if (nextAppState === 'background') {
+        setAuthenticated(false);
+      } else if (nextAppState === 'active') {
+        if (!authenticated) handleBiometricAuthentication();
       }
     };
 
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, [authenticated]);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const data = await mockApi.fetchTransactionData();
+      setTransactions(data);
+      setError(null);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const handleRefresh = () => {
+    setRefreshing(true);
     fetchData();
-  }, []);
+  };
 
   const handleBiometricAuthentication = async () => {
-    const rnBiometrics = new ReactNativeBiometrics();
+    if (authenticated) return;
 
+    const rnBiometrics = new ReactNativeBiometrics();
     const {available, biometryType} = await rnBiometrics.isSensorAvailable();
 
     if (
       available &&
       (biometryType === 'TouchID' || biometryType === 'FaceID')
     ) {
-      const {success} = await rnBiometrics.simplePrompt({
-        promptMessage: 'Authenticate to view transactions',
-      });
+      try {
+        const {success} = await rnBiometrics.simplePrompt({
+          promptMessage: 'Authenticate to view transactions',
+        });
 
-      if (success) {
-        setAuthenticated(true);
-      } else {
-        setAuthenticated(false);
-        Alert.alert('Authentication Failed');
+        if (success) setAuthenticated(true);
+      } catch (error) {
+        console.error('Biometric authentication error:', error);
       }
     } else {
       Alert.alert('Biometric Authentication not available');
     }
   };
 
-  if (loading) {
+  if (loading && !refreshing) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color={Color.BLACK} />
@@ -123,6 +146,12 @@ export const TransactionHistoryScreen = ({navigation}: Props) => {
                   }
                 />
               )}
+              refreshControl={
+                <RefreshControl
+                  refreshing={refreshing}
+                  onRefresh={handleRefresh}
+                />
+              }
             />
           </>
         ) : (
