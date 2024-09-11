@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, SafeAreaView, View} from 'react-native';
 import moment from 'moment';
 
-import {Color} from '../utils/color';
+import {Color, scale, verticalScale} from '../utils';
 
 interface TransactionDetailScreenProps {
   id: number;
@@ -69,41 +69,42 @@ export const TransactionDetailScreen = (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: scale(20),
+    paddingVertical: verticalScale(20),
   },
   section: {
-    marginTop: 30,
-    padding: 20,
+    marginTop: verticalScale(30),
+    paddingHorizontal: scale(20),
+    paddingVertical: verticalScale(20),
     backgroundColor: Color.WHITE,
-    borderRadius: 10,
+    borderRadius: scale(10),
     shadowColor: Color.BLACK,
     shadowOpacity: 0.1,
-    shadowRadius: 10,
+    shadowRadius: scale(10),
     elevation: 3,
   },
   sectionHeader: {
-    fontSize: 18,
+    fontSize: scale(20),
     fontWeight: 'bold',
-    marginBottom: 15,
+    marginBottom: verticalScale(15),
     color: Color.BLACK,
   },
   detailItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: verticalScale(10),
   },
   label: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: scale(16),
+    fontWeight: 'bold',
     color: Color.GRAY,
   },
   value: {
-    fontSize: 16,
-    fontWeight: '400',
+    fontSize: scale(16),
     color: Color.BLACK,
   },
   amount: {
-    fontSize: 24,
+    fontSize: scale(24),
     fontWeight: 'bold',
     color: Color.BLACK,
   },

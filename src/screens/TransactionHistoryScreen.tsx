@@ -15,7 +15,7 @@ import ReactNativeBiometrics from 'react-native-biometrics';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import {TransactionItem} from '../components';
-import {Color} from '../utils/color';
+import {Color, scale, verticalScale} from '../utils';
 import {RootStackParamList} from '../navigator';
 import {mockApi} from '../api';
 
@@ -180,14 +180,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     backgroundColor: Color.BACKGROUND,
-    marginHorizontal: 10,
+    marginHorizontal: scale(10),
   },
   title: {
-    fontSize: 24,
-    fontWeight: '800',
+    fontSize: scale(22),
+    fontWeight: 'bold',
     textAlign: 'center',
-    color: 'black',
-    marginBottom: 20,
+    color: Color.BLACK,
+    marginBottom: verticalScale(20),
   },
   loadingContainer: {
     flex: 1,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorText: {
-    fontSize: 12,
-    color: 'red',
+    fontSize: scale(12),
+    color: Color.RED,
   },
 });

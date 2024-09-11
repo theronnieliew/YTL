@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 
-import {Color} from '../utils/color';
+import {Color, scale, verticalScale} from '../utils';
 
 interface TransactionItemProps {
   date: string;
@@ -35,13 +35,13 @@ export const TransactionItem = (props: TransactionItemProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
-    height: 80,
+    borderRadius: scale(10),
+    height: verticalScale(80),
     width: '100%',
     borderWidth: 1,
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    marginBottom: 10,
+    paddingHorizontal: scale(20),
+    marginBottom: verticalScale(10),
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: Color.WHITE,
@@ -55,16 +55,16 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Color.BLACK,
-    fontSize: 16,
-    marginBottom: 5,
+    fontSize: scale(16),
+    marginBottom: verticalScale(5),
   },
   desc: {
     color: Color.GRAY,
-    fontSize: 14,
+    fontSize: scale(16),
   },
   amount: {
     color: Color.BLACK,
-    fontSize: 20,
+    fontSize: scale(21),
     fontWeight: 'bold',
   },
 });
