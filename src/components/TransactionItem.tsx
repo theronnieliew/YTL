@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
 } from 'react-native';
+import moment from 'moment';
 
 import {Color} from '../utils/color';
 
@@ -21,7 +22,9 @@ export const TransactionItem = (props: TransactionItemProps) => {
   return (
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <View style={styles.leftContent}>
-        <Text style={styles.text}>{props.date}</Text>
+        <Text style={styles.text}>
+          {moment(props.date).format('DD MMM YYYY, h:mm A')}
+        </Text>
         <Text style={styles.text}>{props.description}</Text>
         <Text style={styles.desc}>{props.type}</Text>
       </View>

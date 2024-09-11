@@ -1,5 +1,6 @@
 import React from 'react';
 import {Text, StyleSheet, SafeAreaView, View} from 'react-native';
+import moment from 'moment';
 
 import {Color} from '../utils/color';
 
@@ -28,7 +29,9 @@ export const TransactionDetailScreen = (
         </View>
         <View style={styles.detailItem}>
           <Text style={styles.label}>Date</Text>
-          <Text style={styles.value}>{transaction.date}</Text>
+          <Text style={styles.value}>
+            {moment(transaction.date).format('DD MMM YYYY, h:mm A')}
+          </Text>
         </View>
         <View style={styles.detailItem}>
           <Text style={styles.label}>Description</Text>
